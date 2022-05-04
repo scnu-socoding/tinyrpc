@@ -1,0 +1,24 @@
+name: 'mirror'
+on:
+  push:
+    branches:
+        - __mirror
+  schedule:
+    - cron: '* 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    name: mirror
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: zehuamama/tinyrpc
+          fetch-depth: 0
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'scnu-socoding/tinyrpc'
